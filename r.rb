@@ -112,6 +112,13 @@ class R < Formula
     args << "--without-tcltk" if build.without? "tcltk"
     args << "--without-x" if build.without? "x11"
 
+    # Use the same environment variables as the CRAN binary
+    args << "CFLAGS=-Wall -mtune=core2 -g -O2"
+    args << "CXXFLAGS=-Wall -mtune=core2 -g -O2"
+    args << "OBJCFLAGS=-Wall -mtune=core2 -g -O2"
+    args << "F77FLAGS=-Wall -g -O2"
+    args << "FCFLAGS=-Wall -g -O2"
+
     # Help CRAN packages find gettext, readline, and openssl
     %w[gettext readline openssl].each do |f|
       ENV.append "CPPFLAGS", "-I#{Formula[f].opt_include}"
